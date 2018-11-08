@@ -1,4 +1,4 @@
-
+<?php include 'handler.php'; ?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -76,20 +76,23 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="form-signin">
+        <div class="msg-wrap py-2">
+                    <p id="msg"></p>
+                  </div>
+        <form id="login_form" class="form-signin" method="post">
       <img class="mb-4" src="img/d-logo.png" alt="" width="72">
       <!-- <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1> -->
       <div class="form-group mb-3">
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="username" class="sr-only">User Name</label>
+        <input type="text" name="username" id="username" class="form-control" placeholder="UserName" required autofocus>
       </div>
       <div class="form-group mb-3">
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
         <div class="py-3">
       </div>
         <div class="btn-group">
-          <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
+          <button class="btn btn-lg btn-primary" name="login" type="submit">Sign in</button>
           <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>

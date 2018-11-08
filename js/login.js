@@ -4,24 +4,19 @@ $(function()
 	$('#login_form').submit(function(e)
       {
         e.preventDefault();
-        $('button[type="submit"]').addClass('disabled');
+        $('button[type="submit"]').prop('disabled', true);
         $('button[type="submit"]').prop('disabled', false);
         $form = $(this);
             $("#msg").html("");  
             $.ajax({
                 type: "POST",
-                url: 'includes/login.php',
+                url: 'handler.php',
                 data: $form.serialize(),
                 success:function(d){
                     $('button[type="submit"]').prop('disabled', false);
-                    if(d==1){
-                      $('#login_form')[0].reset();
-                      $("#msg").css("color","green");
-                      $("#msg").html("Login Successful");
-                      document.location = 'dashboard';
-                    }else{
+                    if(d==0){
                        $("#msg").css("color","red");
-                        $("#msg").html("Something went wrong. Please try again");
+                        $("#msg").html("Login Failed. Retry again");
                       } 
                 }
             });        

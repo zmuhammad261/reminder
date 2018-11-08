@@ -1,0 +1,71 @@
+/*
+ * Globals
+ */
+
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #FF7528;
+}
+
+/* Custom default button */
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus {
+  color: #ffffff;
+  text-shadow: none; /* Prevent inheritance from `body` */
+  background-color: #FF7528;
+  border: .05rem solid #FF7528;
+}
+
+
+/*
+ * Base structure
+ */
+
+html,
+body {
+}
+
+body {
+  color: #313131;
+}
+
+.cover-container {
+  max-width: 42em;
+}
+
+
+/*
+ * Header
+ */
+.masthead {
+  margin-bottom: 2rem;
+}
+
+
+main.hero {
+  min-height: 100vh;
+  background: url(../img/remme-hero.png) center center fixed no-repeat;
+  background-size: cover;
+}
+
+/*
+ * Cover
+ */
+.cover {
+  padding: 0 1.5rem;
+}
+.cover .btn-lg {
+  padding: .75rem 1.25rem;
+  font-weight: 700;
+}
+
+
+/*
+ * Footer
+ */
+.mastfoot {
+  color: rgba(0, 0, 0, .75);
+}

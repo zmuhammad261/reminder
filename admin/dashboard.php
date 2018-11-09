@@ -20,32 +20,21 @@ $lastInsertId = $dbh->lastInsertId();
 if($lastInsertId)
 {
 header("Location: " . $_SERVER['REQUEST_URI'] . "?submit=true");
-$msg=" Slide Created Successfully";
+$msg="Created Successfully";
 }
 else
 {
 $error=" Something went wrong. Please try again";
 }
 }
-if(isset($_REQUEST['eid']))
+if(isset($_GET['del']))
 {
-$eid=intval($_GET['eid']);
-$status=1;
-$sql = "UPDATE tblcontactusquery SET status=:status WHERE  id=:eid";
+$id=$_GET['del'];
+$sql = "DELETE from tbltodos WHERE tid=:id";
 $query = $dbh->prepare($sql);
-$query -> bindParam(':status',$status, PDO::PARAM_STR);
-$query-> bindParam(':eid',$eid, PDO::PARAM_STR);
+$query -> bindParam(':id',$id, PDO::PARAM_STR);
 $query -> execute();
-$msg=" Query Successfully Inactive";
-}
-if(isset($_REQUEST['del']))
-{
-$did=intval($_GET['del']);
-$sql = "delete from tblcontactusquery WHERE  id=:did";
-$query = $dbh->prepare($sql);
-$query-> bindParam(':did',$did, PDO::PARAM_STR);
-$query -> execute();
-$msg="Record deleted Successfully ";
+// $msg="Skill deleted";
 }
 ?>
 <!doctype html>
@@ -104,69 +93,65 @@ $msg="Record deleted Successfully ";
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                        <div class="col-md-12">
+                        <div class="row justify-content-center">
+                        <div class="col-md-6">
                             <!-- Zero Configuration Table -->
-                            <div class="card card-default">
-                                <div class="card-body">
-                                    <?php if($error){?>
-                                    <div class="alert errorWrap">
-                                        <button type="button" class="close" data-dismiss="alert">×</button>
-                                        <strong>ERROR</strong>:<?php echo htmlentities($error); ?>
-                                    </div>
-                                    <?php }
-                                    else if($msg){?>
-                                    <div class="alert succWrap">
-                                        <button type="button" class="close" data-dismiss="alert">×</button>
-                                        <strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?>
-                                    </div>
-                                    <?php }?>
-                                    <table id="dtablez" class="table table-striped table-bordered mt-3" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Message</th>
-                                                <th>Posting date</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $sql = "SELECT * from  tblcontactusquery ORDER by id DESC LIMIT 5";
-                                            $query = $dbh -> prepare($sql);
-                                            $query->execute();
-                                            $results=$query->fetchAll(PDO::FETCH_OBJ);
-                                            $cnt=1;
-                                            if($query->rowCount() > 0)
-                                            {
-                                            foreach($results as $result)
-                                            {               ?>
-                                            <tr>
-                                                <td><?php echo htmlentities($cnt);?></td>
-                                                <td><?php echo htmlentities($result->name);?></td>
-                                                <td><?php echo htmlentities($result->EmailId);?></td>
-                                                <td><?php echo htmlentities($result->Message);?></td>
-                                                <td><?php echo htmlentities($result->PostingDate);?></td>
-                                                <?php if($result->status==1)
-                                                {
-                                                ?>
-                                                <td class="text-center">
-                                                    <i class="ti-check text-success"></i>
-                                                    <a class="pl-3" href="dashboard?del=<?php echo htmlentities($result->id);?>" onclick="return confirm('Do you really want to delete')" ><i class="ti-close text-danger"></i></a>
-                                                </td>
-                                                    <?php } else {?>
-                                                <td class="text-center">
-                                                    <a href="dashboard?eid=<?php echo htmlentities($result->id);?>" onclick="return confirm('Mark it as read?')" ><i class="ti-email text-primary"></i></a>
-                                                    <a class="pl-3" href="dashboard?eid=<?php echo htmlentities($result->id);?>" onclick="return confirm('Do you really want to delete')" ><i class="ti-close text-danger"></i></a>
-                                                </td>
-                                                <?php } ?>
-                                            </tr>
-                                            <?php $cnt=$cnt+1; }} ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                            <div class="card">
+<div class="card-header">
+<h4 class="card-title">Todos</h4>
+</div>
+<div class="card-content">
+<div class="table-full-width table-tasks">
+<table class="table">
+<tbody>
+    <?php
+                        $query = "SELECT * FROM tbltodos";
+                        $stmtz = $dbh->prepare( $query );
+                        $stmtz->execute();
+                        while($row=$stmtz->fetch(PDO::FETCH_ASSOC)){
+                        ?>
+    <tr>
+        <td>
+            <div class="form-check checkbox">
+                <input class="form-check-input" type="checkbox" value="" data-toggle="checkbox">
+                <label class="form-check-label" class="checkbox"></label>
+            </div>
+        </td>
+        <td><?php echo $row[title]; ?></td>
+        <td class="td-actions text-right">
+            <div class="table-icons">
+                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+                <i class="ti-pencil-alt"></i>
+                </button>
+                <a href="dashboard?del=<?php echo $row[tid];?>" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs" onclick="alert('You Surely want to delete it')">
+                <i class="ti-close"></i>
+                </a>
+            </div>
+        </td>
+    </tr>
+    <?php } ?>
+</tbody>
+</table>
+</div>
+</div>
+<div class="card-footer">
+<hr>
+<?php if($error){?>
+                      <div class="alert errorWrap"><button type="button" class="close" data-dismiss="alert">×</button><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div>
+                      <?php }
+                      else if($msg){?>
+                      <div class="alert succWrap"><button type="button" class="close" data-dismiss="alert">×</button><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div>
+                      <?php }?>
+<div class="stats">
+<form name="post" method="post" enctype="multipart/form-data">
+<div class="form-group">
+    <input type="text" class="form-control" name="sltitle" id="sltitle" placeholder="What to do!" required>
+</div>
+<button type="submit" name="submit" class="btn btn-fill btn-info">Create</button>
+</form>
+</div>
+</div>
+</div>
                         </div>
                     </div>
                     </div>

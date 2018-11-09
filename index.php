@@ -1,4 +1,25 @@
-<?php include 'handler.php'; ?>
+<?php
+error_reporting(0);
+include('includes/config.php');
+// if(isset($_POST['login']))
+// {
+// $uname=$_POST['username'];
+// $password=md5($_POST['password']);
+// $sql ="SELECT UserName,Password FROM admin WHERE UserName=:uname and Password=:password";
+// $query= $dbh -> prepare($sql);
+// $query-> bindParam(':uname', $uname, PDO::PARAM_STR);
+// $query-> bindParam(':password', $password, PDO::PARAM_STR);
+// $query-> execute();
+// $results=$query->fetchAll(PDO::FETCH_OBJ);
+// if($query->rowCount() > 0)
+// {
+// $_SESSION['alogin']=$_POST['username'];
+// echo "<script type='text/javascript'> document.location = 'admin/index'; </script>";
+// } else{
+// $error="Login Failed. Retry";
+// }
+// }
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -37,7 +58,7 @@
                     <a class="nav-link" href="#" >About</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link disabled" data-toggle="modal" data-target="#loginModal">Login</a>
+                    <a class="nav-link disabled" href="admin">Login</a>
                   </li>
                 </ul>
               </div>
@@ -66,7 +87,7 @@
       </footer>
 
 <!-- Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -81,7 +102,6 @@
                   </div>
         <form id="login_form" class="form-signin" method="post">
       <img class="mb-4" src="img/d-logo.png" alt="" width="72">
-      <!-- <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1> -->
       <div class="form-group mb-3">
         <label for="username" class="sr-only">User Name</label>
         <input type="text" name="username" id="username" class="form-control" placeholder="UserName" required autofocus>
@@ -100,7 +120,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
     <!-- JavaScript
